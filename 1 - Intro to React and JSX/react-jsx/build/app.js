@@ -1,17 +1,23 @@
 var rootElement = document.getElementById('root');
 var root = ReactDOM.createRoot(rootElement);
-console.log(root);
+
+var Heading = function Heading(props) {
+    return React.createElement(
+        "h1",
+        { className: "heading" },
+        "Hello From ",
+        props.title,
+        "!"
+    );
+};
+
 var headerElement = React.createElement(
     "div",
     null,
     React.createElement(
         "header",
         null,
-        React.createElement(
-            "h1",
-            { className: "heading" },
-            "Hello From React!"
-        ),
+        React.createElement(Heading, { title: "React" }),
         React.createElement(
             "h2",
             null,
