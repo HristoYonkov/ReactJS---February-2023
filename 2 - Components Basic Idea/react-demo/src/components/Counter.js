@@ -46,11 +46,13 @@ const Counter = (props) => {
     //     color = 'blue'
     // }
     
+    // let canReset = props.canReset;
+
     return (
         <div>
             {/* <h2>{counter > 0 ? 'First Blood' : 'Counter'} : {counter}</h2> */}
 
-            <p style={{ fontSize: counter + 1 * 10, color: counter == 0 ? 'red' : 'blue' }}>
+            <p style={{ fontSize: counter + 1 * 10 + 'px', color: counter == 0 ? 'red' : 'blue' }}>
                 {counter >= 6
                     ? 'Rampage'
                     : getTitle(counter)
@@ -63,7 +65,7 @@ const Counter = (props) => {
                 : null
             }
 
-            {props.canReset && <button onClick={clear}>0</button>}
+            { counter == 0 ? !props.canReset : props.canReset && <button onClick={clear}>0</button>}
 
             <button onClick={decrement}>-</button>
         </div>
