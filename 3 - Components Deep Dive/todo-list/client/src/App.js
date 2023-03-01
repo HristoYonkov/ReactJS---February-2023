@@ -2,9 +2,35 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Loader from "./components/Loader";
 import Table from "./components/Table";
+import { useEffect, useState } from 'react';
 
 function App() {
-  
+  const [todos, setTodos] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:3030/jsonstore/todos')
+      .then(res => res.json())
+      .then(data => {
+        setTodos(Object.values(data));
+        setLoading(false);
+      })
+  }, []);
+
+  function changeStatus(id) {
+    setTodos(state => state.map(x => x._id === id ? ({ ...x, isCompleted: !x.isCompleted }) : x))
+  }
+
+  function addTodo() {
+    const lastId = Number(todos[todos.length - 1]._id)
+    const text = prompt('Task Name:');
+    
+    if (text !== null) {
+      const newTask = { text, _id: lastId + 1, isCompleted: false }
+      setTodos(state => [newTask, ...state]);
+    }
+  }
+
   return (
     <div className="App">
 
@@ -17,16 +43,19 @@ function App() {
           <h1>Todo List</h1>
 
           <div className="add-btn-container">
-            <button className="btn">+ Add new Todo</button>
+            <button onClick={() => addTodo()} className="btn">+ Add new Todo</button>
           </div>
 
           <div className="table-wrapper">
-
-            {/* <Loader /> */}
-
-            <Table />
+            {isLoading
+              ? <Loader />
+              : <Table todos={todos} changeStatus={changeStatus} />
+            }
+            
           </div>
+
         </section>
+
       </main>
 
       <Footer />
