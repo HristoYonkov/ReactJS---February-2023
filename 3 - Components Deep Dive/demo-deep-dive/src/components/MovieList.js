@@ -4,6 +4,7 @@ import Movie from "./Movie";
 export default function MovieList({
     movies,
     onMovieDelete,
+    movieSelected,
 
 }) {
     // let movieElements = [];
@@ -18,7 +19,7 @@ export default function MovieList({
         <ul>
             {movies.map(movie => (
                 <li key={movie.id}>
-                    <Movie {...movie} onMovieDelete={onMovieDelete} />
+                    <Movie {...movie} onMovieDelete={onMovieDelete} movieSelected={movieSelected} />
                 </li>
             ))}
         </ul>
