@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import Movie from "./Movie";
 
 export default function MovieList({

@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import style from './Movie.module.css'
 
 export default function Movie({
     id,
@@ -13,15 +14,15 @@ export default function Movie({
 }) {
     useEffect(() => {
         console.log(`Movie - ${title} - Mounted!`);
-        
+
         return () => {
             console.log(`Movie - ${title} - Unmounted!`);
         }
-    }, []);
+    }, [title]);
 
     useEffect(() => {
         console.log(`Movie - ${title} - Updated!`);
-    }, [selected]);
+    }, [selected, title]);
 
     // useEffect(() => {
     //     return () => {
@@ -30,7 +31,7 @@ export default function Movie({
     // }, []);
 
     return (
-        <article>
+        <article className={style['movie-article']}>
             <h3>{title}, {year}</h3>
             {selected && <h4>Selected</h4>}
             <main>

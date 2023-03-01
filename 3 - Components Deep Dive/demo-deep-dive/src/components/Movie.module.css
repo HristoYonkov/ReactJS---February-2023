@@ -1,0 +1,6 @@
+.movie-article {
+    border-bottom: 2px solid greenyellow;
+    padding-bottom: 15px;
+}
+
+/* In React never use TAGS! */
