@@ -11,6 +11,7 @@ export default function Row({
             <td>{isCompleted ? "Completed" : "Not Completed"}</td>
             <td className="todo-action">
                 <button onClick={() => changeStatus(_id)} className="btn todo-btn">Change status</button>
+                <button onClick={() => changeStatus(_id)} className="btn todo-btn">Delete</button>
             </td>
         </tr>
     );

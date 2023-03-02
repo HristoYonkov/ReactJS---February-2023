@@ -44,6 +44,10 @@ body {
   background: #24292f;
 }
 
+.todo-action .todo-btn:first-child {
+  margin-bottom: 5px;
+}
+
 .btn {
   border: none;
   padding: 5px 10px;
@@ -257,6 +261,8 @@ body {
 }
 
 .todo-action .todo-btn {
+  display: block;
+  margin: auto;
   background: #24292f;
   border: none;
   padding: 5px 10px;

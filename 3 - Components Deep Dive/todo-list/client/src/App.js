@@ -22,11 +22,12 @@ function App() {
   }
 
   function addTodo() {
-    const lastId = Number(todos[todos.length - 1]._id)
+    const lastId = Number(todos.length - 1);
     const text = prompt('Task Name:');
     
-    if (text !== null) {
+    if (text !== null && text !== '') {
       const newTask = { text, _id: lastId + 1, isCompleted: false }
+      console.log(newTask);
       setTodos(state => [newTask, ...state]);
     }
   }
