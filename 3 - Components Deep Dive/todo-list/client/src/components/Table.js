@@ -1,6 +1,6 @@
 import Row from "./Row";
 
-export default function Table({ todos, changeStatus }) {
+export default function Table({ todos, changeStatus, deleteList }) {
 
     return (
         <table className="table">
@@ -14,7 +14,7 @@ export default function Table({ todos, changeStatus }) {
             <tbody>
 
                 {todos.map(x =>
-                    <Row key={x._id} {...x} changeStatus={changeStatus} />
+                    <Row key={x._id} {...x} changeStatus={changeStatus} deleteList={deleteList} />
                 )}
 
             </tbody>

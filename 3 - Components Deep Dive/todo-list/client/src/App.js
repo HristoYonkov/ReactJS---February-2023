@@ -17,6 +17,10 @@ function App() {
       })
   }, []);
 
+  function deleteList(id) {
+    setTodos(state => state.filter(x => x._id !== id))
+  }
+
   function changeStatus(id) {
     setTodos(state => state.map(x => x._id === id ? ({ ...x, isCompleted: !x.isCompleted }) : x))
   }
@@ -50,7 +54,7 @@ function App() {
           <div className="table-wrapper">
             {isLoading
               ? <Loader />
-              : <Table todos={todos} changeStatus={changeStatus} />
+              : <Table todos={todos} changeStatus={changeStatus} deleteList={deleteList} />
             }
             
           </div>
