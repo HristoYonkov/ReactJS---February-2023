@@ -1,25 +1,35 @@
+import { useEffect, useState } from "react";
+
+import * as userService from './services/userService'
+
 import { Header } from "./components/common/Header";
 import { Footer } from "./components/common/Footer";
 import { Search } from "./components/search/Search";
-import { UserSection } from "./components/user-section/UserSection";
-
+import { UserList } from "./components/user-list/UserList";
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
+    const [users, setUsers] = useState([]);
 
-      <main className="main">
-        <section className="card users-container">
-          <Search />
-          <UserSection />
-        </section>
-      </main>
+    useEffect(() => {
+        userService.getAll()
+        .then(users => setUsers(users));
+    }, []);
 
-      <Footer />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Header />
+
+            <main className="main">
+                <section className="card users-container">
+                    <Search />
+                    <UserList users={users} />
+                </section>
+            </main>
+
+            <Footer />
+        </div>
+    );
 }
 
 export default App;
