@@ -2,47 +2,24 @@ import { useState } from "react";
 
 import * as userService from '../../services/userService'
 
+import { userActions } from './UserListConstants';
 import { UserDetails } from "./user-details/UserDetails";
 import { UserEdit } from "./user-edit/UserEdit";
 import { UserItem } from "./user-item/UserItem";
+import { UserDelete } from "./user-delete/UserDelete";
 
-const userActions = {
-    details: 'details',
-    edit: 'edit',
-    delete: 'delete',
-}
 export const UserList = ({ users }) => {
     const [action, setAction] = useState({ user: null, action: null });
 
-    const detailsHandler = (id) => {
+    const actionTypeHandler = (id, actionType) => {
         userService.getOne(id)
             .then(user => {
                 setAction({
                     user,
-                    action: userActions.details
+                    action: actionType
                 })
             });
     };
-
-    const editHandler = (id) => {
-        userService.getOne(id)
-            .then(user => {
-                setAction({
-                    user,
-                    action: userActions.edit
-                })
-            });
-    };
-
-    const deleteHandler = (id) => {
-        userService.getOne(id)
-            .then(user => {
-                setAction({
-                    user,
-                    action: userActions.delete
-                })
-            });
-    }
 
     const closeHandler = () => {
         setAction({ user: null, action: null });
@@ -53,15 +30,22 @@ export const UserList = ({ users }) => {
 
             {/* Overlap Components!!! */}
 
-            {action.action == userActions.details &&
+            {action.action === userActions.details &&
                 <UserDetails
                     user={action.user}
                     closeHandler={closeHandler}
                 />
             }
 
-            {action.action == userActions.edit &&
+            {action.action === userActions.edit &&
                 <UserEdit
+                    user={action.user}
+                    closeHandler={closeHandler}
+                />
+            }
+
+            {action.action === userActions.delete &&
+                <UserDelete
                     user={action.user}
                     closeHandler={closeHandler}
                 />
@@ -127,8 +111,7 @@ export const UserList = ({ users }) => {
                         <tr key={user._id}>
                             <UserItem
                                 {...user}
-                                detailsHandler={detailsHandler}
-                                editHandler={editHandler}
+                                actionTypeHandler={actionTypeHandler}
                             />
                         </tr>)
                     }
