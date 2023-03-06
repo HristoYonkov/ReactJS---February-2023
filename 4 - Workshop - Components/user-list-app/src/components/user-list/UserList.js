@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 import * as userService from '../../services/userService';
 
@@ -15,7 +15,7 @@ export const UserList = () => {
 
     useEffect(() => {
         userService.getAll()
-        .then(users => setUsers(users));
+            .then(users => setUsers(users));
     }, []);
 
     const actionTypeHandler = (id, actionType) => {
@@ -53,7 +53,6 @@ export const UserList = () => {
             phoneNumber,
             address
         }
-        console.log(userData);
         userService.create(userData)
             .then(user => {
                 setUsers(state => [...state, user])
@@ -61,9 +60,47 @@ export const UserList = () => {
             })
     }
 
-    const editHandler = ( e) => {
+    const editHandler = (e) => {
         e.preventDefault();
-        console.log(action.user._id);
+        const formData = new FormData(e.target);
+        const {
+            firstName,
+            lastName,
+            email,
+            imageUrl,
+            phoneNumber,
+            ...address
+        } = Object.fromEntries(formData);
+
+        const userData = {
+            firstName,
+            lastName,
+            email,
+            imageUrl,
+            phoneNumber,
+            address
+        }
+        userService.edit(userData, action.user._id)
+            .then(user => {
+                let newState = users.map((x) => {
+                    if (x._id === user._id) {
+                        return { ...user };
+                    }
+                    return x;
+                });
+
+                setUsers(newState);
+                closeHandler();
+            })
+    }
+
+    const delHandler = (id) => {
+        userService.del(action.user._id)
+        .then(user => {
+            let newState = users.filter((x) => x._id !== user.userId);
+            setUsers(newState);
+            closeHandler();
+        })
     }
 
     return (
@@ -91,6 +128,7 @@ export const UserList = () => {
                     <UserDelete
                         user={action.user}
                         closeHandler={closeHandler}
+                        delHandler={delHandler}
                     />
                 }
 

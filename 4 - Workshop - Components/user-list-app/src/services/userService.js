@@ -22,3 +22,25 @@ export const create = async (userData) => {
 
     return result.user;
 }
+
+export const edit = async (userData, id) => {
+    const response = await fetch(`http://localhost:3005/api/users/${id}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+    })
+    const result = await response.json();
+
+    return result.user;
+}
+
+export const del = async (id) => {
+    const response = await fetch(`http://localhost:3005/api/users/${id}`, {
+        method: 'DELETE',
+    })
+
+    const result = await response.json();
+    return result;
+}
