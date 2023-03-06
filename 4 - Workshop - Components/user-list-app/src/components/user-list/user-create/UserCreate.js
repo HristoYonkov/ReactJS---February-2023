@@ -1,4 +1,8 @@
-export const UserCreate = ({ closeHandler, }) => {
+export const UserCreate = ({ 
+    closeHandler, 
+    createHandler
+}) => {
+    
     return (
         <div className="overlay">
             <div className="backdrop" onClick={closeHandler}></div>
@@ -15,7 +19,7 @@ export const UserCreate = ({ closeHandler, }) => {
                             </svg>
                         </button>
                     </header>
-                    <form>
+                    <form onSubmit={createHandler}>
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="firstName">First name</label>

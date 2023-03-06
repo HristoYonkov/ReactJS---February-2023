@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 
-import * as userService from '../../services/userService'
+import * as userService from '../../services/userService';
 
 import { userActions } from './UserListConstants';
 import { UserDetails } from "./user-details/UserDetails";
@@ -9,8 +9,14 @@ import { UserItem } from "./user-item/UserItem";
 import { UserDelete } from "./user-delete/UserDelete";
 import { UserCreate } from "./user-create/UserCreate";
 
-export const UserList = ({ users }) => {
+export const UserList = () => {
+    const [users, setUsers] = useState([]);
     const [action, setAction] = useState({ user: null, action: null });
+
+    useEffect(() => {
+        userService.getAll()
+        .then(users => setUsers(users));
+    }, []);
 
     const actionTypeHandler = (id, actionType) => {
         userService.getOne(id)
@@ -25,6 +31,35 @@ export const UserList = ({ users }) => {
     const closeHandler = () => {
         setAction({ user: null, action: null });
     };
+
+    const createHandler = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const {
+            firstName,
+            lastName,
+            email,
+            imageUrl,
+            phoneNumber,
+            ...address
+        } = Object.fromEntries(formData);
+
+        const userData = {
+            firstName,
+            lastName,
+            email,
+            imageUrl,
+            phoneNumber,
+            address
+        }
+        console.log(userData);
+        userService.create(userData)
+            .then(user => {
+                setUsers(state => [...state, user])
+                closeHandler();
+            })
+    }
 
     return (
         <>
@@ -56,6 +91,7 @@ export const UserList = ({ users }) => {
                 {action.action === userActions.add &&
                     <UserCreate
                         closeHandler={closeHandler}
+                        createHandler={createHandler}
                     />
                 }
 
