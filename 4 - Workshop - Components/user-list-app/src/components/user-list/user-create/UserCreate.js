@@ -1,16 +1,11 @@
-
-
-export const UserEdit = ({
-    user,
-    closeHandler
-}) => {
+export const UserCreate = ({ closeHandler, }) => {
     return (
         <div className="overlay">
             <div className="backdrop" onClick={closeHandler}></div>
             <div className="modal">
                 <div className="user-container">
                     <header className="headers">
-                        <h2>Edit User</h2>
+                        <h2>Add User</h2>
                         <button className="btn close" onClick={closeHandler}>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -118,7 +113,7 @@ export const UserEdit = ({
                             </div>
                         </div>
                         <div id="form-actions">
-                            <button id="action-save" className="btn" type="submit">Edit</button>
+                            <button id="action-save" className="btn" type="submit">Save</button>
                             <button id="action-cancel" className="btn" type="button" onClick={closeHandler}>
                                 Cancel
                             </button>
