@@ -61,6 +61,11 @@ export const UserList = () => {
             })
     }
 
+    const editHandler = ( e) => {
+        e.preventDefault();
+        console.log(action.user._id);
+    }
+
     return (
         <>
             <div className="table-wrapper">
@@ -78,6 +83,7 @@ export const UserList = () => {
                     <UserEdit
                         user={action.user}
                         closeHandler={closeHandler}
+                        editHandler={editHandler}
                     />
                 }
 
