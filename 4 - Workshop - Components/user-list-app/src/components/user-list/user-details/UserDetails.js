@@ -1,4 +1,5 @@
 export const UserDetails = ({user, closeHandler}) => {
+    const blankProfileUrl = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
     return (
         <div className="overlay">
@@ -18,7 +19,7 @@ export const UserDetails = ({user, closeHandler}) => {
                     </header>
                     <div className="content">
                         <div className="image-container">
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt=""
+                            <img src={user.imageUrl || blankProfileUrl} alt={`${user.firstName}'s profile`}
                                 className="image" />
                         </div>
                         <div className="user-details">
