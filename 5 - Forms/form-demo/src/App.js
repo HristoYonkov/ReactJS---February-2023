@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './App.css';
 
 function App() {
     const [hobbies, setHobbies] = useState({});
-
+    const ref = useRef();
     const [formValues, setFormValues] = useState({
         username: 'Pesho',
         creditCard: '',
@@ -11,21 +11,22 @@ function App() {
         gender: 'male',
         bio: '',
         age: ''
-    })
+    });
+
+    useEffect(() => {
+        ref.current.value = formValues.username;
+    }, [formValues.username]);
 
     const onChangeHandler = (e) => {
-        setFormValues(state => ({...state, [e.target.name]: e.target.value}))
-    }
-    
+        setFormValues(state => ({ ...state, [e.target.name]: e.target.value }))
+    };
+
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(formValues.username);
-        console.log(formValues.age);
-        console.log(formValues.creditCard);
-    }
+    };
 
     const onHobbiesChange = (e) => {
-        setHobbies(state => ({...state, [e.target.value]: e.target.checked}));
+        setHobbies(state => ({ ...state, [e.target.value]: e.target.checked }));
     };
 
     return (
@@ -90,17 +91,22 @@ function App() {
 
                     <div>
                         <label htmlFor="hiking">hiking</label>
-                        <input type="checkbox" name='hobbies' value = "hiking" id="hiking" onChange={onHobbiesChange} checked={hobbies['hiking'] || false}/>
+                        <input type="checkbox" name='hobbies' value="hiking" id="hiking" onChange={onHobbiesChange} checked={hobbies['hiking'] || false} />
                         <label htmlFor="reading">reading</label>
-                        <input type="checkbox" name='hobbies' value = "reading" id="reading" onChange={onHobbiesChange} checked={hobbies['reading'] || false}/>
+                        <input type="checkbox" name='hobbies' value="reading" id="reading" onChange={onHobbiesChange} checked={hobbies['reading'] || false} />
                         <label htmlFor="sports">sports</label>
-                        <input type="checkbox" name='hobbies' value = "sports" id="sports" onChange={onHobbiesChange} checked={hobbies['sports'] || false}/>
+                        <input type="checkbox" name='hobbies' value="sports" id="sports" onChange={onHobbiesChange} checked={hobbies['sports'] || false} />
                         <label htmlFor="gaming">gaming</label>
-                        <input type="checkbox" name='hobbies' value = "gaming" id="gaming" onChange={onHobbiesChange} checked={hobbies['gaming'] || false}/>
+                        <input type="checkbox" name='hobbies' value="gaming" id="gaming" onChange={onHobbiesChange} checked={hobbies['gaming'] || false} />
                         <label htmlFor="walking">walking in woods</label>
-                        <input type="checkbox" name='hobbies' value = "walking" id="walking" onChange={onHobbiesChange} checked={hobbies['walking'] || false}/>
+                        <input type="checkbox" name='hobbies' value="walking" id="walking" onChange={onHobbiesChange} checked={hobbies['walking'] || false} />
                     </div>
 
+                    <div>
+                        <label htmlFor="uncontrolled">Uncontrolled</label>
+                        <input type="text" name='uncontrolled' id='uncontrolled' ref={ref} />
+                    </div>
+                    
                     <div>
                         <input type="submit" value="Send" />
                     </div>
