@@ -12,6 +12,14 @@ import { UserCreate } from "./user-create/UserCreate";
 export const UserList = () => {
     const [users, setUsers] = useState([]);
     const [action, setAction] = useState({ user: null, action: null });
+    const [formValues, setFormValues] = useState({
+        firstName: '',
+        lastName: ''
+    });
+    const [formErrors, setFormErrors] = useState({
+        firstName: '',
+        lastName: ''
+    });
 
     useEffect(() => {
         userService.getAll()
@@ -96,11 +104,28 @@ export const UserList = () => {
 
     const delHandler = (id) => {
         userService.del(action.user._id)
-        .then(user => {
-            let newState = users.filter((x) => x._id !== user.userId);
-            setUsers(newState);
-            closeHandler();
-        })
+            .then(user => {
+                let newState = users.filter((x) => x._id !== user.userId);
+                setUsers(newState);
+                closeHandler();
+            })
+    }
+
+    const onChangeHandler = (e) => {
+        setFormValues(state => ({ ...state, [e.target.name]: e.target.value }))
+    }
+
+    const validateForm = (e) => {
+        const value = e.target.value;
+        const errors = {};
+        if (e.target.name === 'firstName' && ((value.length > 0 && value.length < 3) || value.length > 20)) {
+            errors.firstName = 'First name must be between 3 and 20 characters!';
+        }
+
+        if (e.target.name === 'lastName' && ((value.length > 0 && value.length < 3) || value.length > 20)) {
+            errors.lastName = 'Last name must be between 3 and 20 characters!';
+        }
+        setFormErrors(errors);
     }
 
     return (
@@ -136,6 +161,10 @@ export const UserList = () => {
                     <UserCreate
                         closeHandler={closeHandler}
                         createHandler={createHandler}
+                        formValues={formValues}
+                        onChangeHandler={onChangeHandler}
+                        formErrors={formErrors}
+                        validateForm={validateForm}
                     />
                 }
 
