@@ -1,0 +1,14 @@
+.navigation li {
+    list-style: none;
+    display: inline;
+    margin-right: 20px;
+}
+
+.navigation li:hover {
+    text-decoration: underline;
+}
+
+.navigation li a {
+    color: white;
+    text-decoration: none;
+}
