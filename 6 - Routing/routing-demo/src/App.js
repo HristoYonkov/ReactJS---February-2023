@@ -16,7 +16,7 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='*' element={<h1>404</h1>} />
           <Route path='/characters' element={<CharacterList />} />
-          <Route path='/characters/:id' element={<Character />} />
+          <Route path='/characters/:id/*' element={<Character />} />
         </Routes>
       </header>
     </div>

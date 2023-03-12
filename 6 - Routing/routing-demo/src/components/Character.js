@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-
+import { useParams, useNavigate, Link, Route, Routes } from "react-router-dom";
+import styles from './Navigation.module.css'
+import { CharacterFilms } from "./CharacterFilms";
 const baseUrl = 'https://swapi.dev/api/people';
 
 export const Character = () => {
@@ -24,6 +25,18 @@ export const Character = () => {
             <h1>Character Page</h1>
             <p>{character.name}</p>
             <button onClick={onBackClick}>Back</button>
+
+            <nav className={styles.navigation}>
+                <li><Link to="films">Films</Link></li>
+                <li><Link to="starships">Starships</Link></li>
+                <li><Link to="vehicles">Vehicles</Link></li>
+            </nav>
+
+            <Routes>
+                <Route path="/films" element={<CharacterFilms />} />
+                <Route path="/starships" element={<h5>Starships</h5>} />
+                <Route path="/vehicles" element={<h5>Vehicles</h5>} />
+            </Routes>
         </>
     );
 }
