@@ -18,11 +18,12 @@ export const GameDetails = () => {
 
     const onCommentSubmit = async (e) => {
         e.preventDefault();
-        await gameService.addComment(gameId, {
+        const result = await gameService.addComment(gameId, {
             username,
             comment,
         });
 
+        setGame(state => ({...state, comments: {...state.comments, result}}));
         setUsername('');
         setComment('');
     }
