@@ -21,7 +21,9 @@ function App() {
     return (
         <div>
             <Header />
+
             <TodoList todos={todos} />
+
         </div>
     );
 }

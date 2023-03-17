@@ -1,4 +1,4 @@
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Button } from 'react-bootstrap';
 import { TodoItem } from './TodoItem';
 
 export const TodoList = ({
@@ -11,6 +11,7 @@ export const TodoList = ({
             <ListGroup>
                 {todos.map(x => <TodoItem key={x._id} {...x} />)}                
             </ListGroup>
+            <Button variant="primary">Add</Button>
         </div>
     );
 }
