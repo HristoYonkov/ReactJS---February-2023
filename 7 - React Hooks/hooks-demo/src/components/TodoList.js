@@ -3,6 +3,7 @@ import { TodoItem } from './TodoItem';
 
 export const TodoList = ({
     todos,
+    onAddTodoClick
 }) => {
 
     return (
@@ -11,7 +12,7 @@ export const TodoList = ({
             <ListGroup>
                 {todos.map(x => <TodoItem key={x._id} {...x} />)}                
             </ListGroup>
-            <Button variant="primary">Add</Button>
+            <Button variant="primary" onClick={onAddTodoClick}>Add</Button>
         </div>
     );
 }
