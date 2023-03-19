@@ -1,4 +1,4 @@
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Button } from 'react-bootstrap';
 
 export const TodoItem = ({
     text,
@@ -6,8 +6,9 @@ export const TodoItem = ({
 }) => {
 
     return (
-        <ListGroup.Item action >
+        <ListGroup.Item action style={{display: 'flex', justifyContent: 'space-between'}} >
             {text}
+            <Button variant="dark">x</Button>
         </ListGroup.Item>
     );
 }

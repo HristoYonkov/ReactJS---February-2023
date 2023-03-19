@@ -30,11 +30,17 @@ function App() {
         });
         const result = await response.json();
 
+        setShowAddTodo(false);
+        setTodos(state => [...state, result]);
         console.log(result);
     }
 
     const onAddTodoClick = () => {
         setShowAddTodo(true);
+    }
+
+    const onTodoAddClose = () => {
+        setShowAddTodo(false);
     }
 
     return (
@@ -43,7 +49,7 @@ function App() {
 
             <TodoList todos={todos} onAddTodoClick={onAddTodoClick} />
 
-            <AddTodoModal show={showAddTodo} onTodoAdd={onTodoAdd} />
+            <AddTodoModal show={showAddTodo} onTodoAdd={onTodoAdd} onTodoAddClose={onTodoAddClose} />
         </div>
     );
 }
