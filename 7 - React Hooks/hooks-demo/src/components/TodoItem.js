@@ -8,10 +8,10 @@ export const TodoItem = ({
     text,
     isCompleted,
 }) => {
-    const { onTodoDeleteClick } = useContext(TodoContext)
+    const { onTodoDeleteClick, onTodoClick } = useContext(TodoContext)
     return (
-        <ListGroup.Item action style={{ display: 'flex', justifyContent: 'space-between' }} >
-            {text}
+        <ListGroup.Item onClick={() => onTodoClick(_id)} action style={{ display: 'flex', justifyContent: 'space-between' }} >
+            <p style={{textDecoration: isCompleted ? 'line-through' : 'none'}}>{text}</p>
             <Button variant="dark" onClick={() => onTodoDeleteClick(_id)}>x</Button>
         </ListGroup.Item>
     );
