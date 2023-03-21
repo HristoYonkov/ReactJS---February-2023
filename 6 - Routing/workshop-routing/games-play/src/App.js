@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 import * as gameService from './services/gameService';
+import { AuthContext } from "./contexts/AuthContext";
 
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
@@ -13,40 +14,47 @@ import { Catalog } from "./components/Catalog/Catalog";
 import { GameDetails } from "./components/GameDetails/GameDetails";
 
 function App() {
-  const navigate = useNavigate();
-  const [games, setGames] = useState([]);
+    const navigate = useNavigate();
+    const [games, setGames] = useState([]);
+    const [auth, setAuth] = useState({});
 
-  useEffect(() =>{
-    gameService.getAll()
-      .then(data => {
-        setGames(data)
-      })
+    useEffect(() => {
+        gameService.getAll()
+            .then(data => {
+                setGames(data)
+            })
 
-  }, []);
+    }, []);
 
-  const onCreateGameSubmit = async (data) => {
-    const newGame = await gameService.create(data);
-    setGames(state => [...state, newGame]);
-    navigate('/catalog')
-  }
+    const onCreateGameSubmit = async (data) => {
+        const newGame = await gameService.create(data);
+        setGames(state => [...state, newGame]);
+        navigate('/catalog')
+    }
 
-  return (
-    <div id="box">
-      <Header />
-      <main id="main-content">
+    const onLoginSubmit = async (data) => {
+        console.log(data);
+    }
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/create" element={<Create onCreateGameSubmit={onCreateGameSubmit} />} />
-          <Route path="/catalog" element={<Catalog games={games} />} />
-          <Route path="/catalog/:gameId" element={<GameDetails />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
-  );
+    return (
+        <AuthContext.Provider value={{onLoginSubmit}}>
+            <div id="box">
+                <Header />
+                <main id="main-content">
+
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/create" element={<Create onCreateGameSubmit={onCreateGameSubmit} />} />
+                        <Route path="/catalog" element={<Catalog games={games} />} />
+                        <Route path="/catalog/:gameId" element={<GameDetails />} />
+                    </Routes>
+                </main>
+                <Footer />
+            </div>
+        </AuthContext.Provider>
+    );
 }
 
 export default App;
