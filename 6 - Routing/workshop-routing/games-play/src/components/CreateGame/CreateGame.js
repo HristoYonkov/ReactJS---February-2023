@@ -1,6 +1,6 @@
-import { useForm } from "../../hooks/useForm";
+import { useForm } from '../../hooks/useForm';
 
-export const Create = ({
+export const CreateGame = ({
     onCreateGameSubmit,
 }) => {
     const { values, changeHandler, onSubmit } = useForm({
@@ -8,15 +8,15 @@ export const Create = ({
         category: '',
         maxLevel: '',
         imageUrl: '',
-        summary: ''
+        summary: '',
     }, onCreateGameSubmit);
 
     return (
         <section id="create-page" className="auth">
-            <form method="POST" onSubmit={onSubmit} id="create">
+            <form id="create" method="post" onSubmit={onSubmit}>
                 <div className="container">
-
                     <h1>Create Game</h1>
+
                     <label htmlFor="leg-title">Legendary title:</label>
                     <input value={values.title} onChange={changeHandler} type="text" id="title" name="title" placeholder="Enter game title..." />
 
@@ -30,10 +30,10 @@ export const Create = ({
                     <input value={values.imageUrl} onChange={changeHandler} type="text" id="imageUrl" name="imageUrl" placeholder="Upload a photo..." />
 
                     <label htmlFor="summary">Summary:</label>
-                    <textarea value={values.summary} onChange={changeHandler} name="summary" id="summary"></textarea>
+                    <textarea name="summary" id="summary" value={values.summary} onChange={changeHandler}></textarea>
                     <input className="btn submit" type="submit" value="Create Game" />
                 </div>
             </form>
         </section>
     );
-}
+};

@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 
-
 export const CatalogItem = ({
+    _id,
     title,
     imageUrl,
     category,
-    _id
 }) => {
-
     return (
         <div className="allGames">
             <div className="allGames-info">

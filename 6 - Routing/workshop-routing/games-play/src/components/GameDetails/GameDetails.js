@@ -1,13 +1,18 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
-import * as gameService from '../../services/gameService';
+import { gameServiceFactory } from '../../services/gameService';
+import { useService } from '../../hooks/useService';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export const GameDetails = () => {
+    const { userId } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [comment, setComment] = useState('');
     const { gameId } = useParams();
     const [game, setGame] = useState({});
+    const gameService = useService(gameServiceFactory)
+    const navigate = useNavigate();
 
     useEffect(() => {
         gameService.getOne(gameId)
@@ -18,15 +23,26 @@ export const GameDetails = () => {
 
     const onCommentSubmit = async (e) => {
         e.preventDefault();
+
         const result = await gameService.addComment(gameId, {
             username,
             comment,
         });
 
-        setGame(state => ({...state, comments: {...state.comments, result}}));
+        setGame(state => ({ ...state, comments: { ...state.comments, [result._id]: result } }));
         setUsername('');
         setComment('');
-    }
+    };
+
+    const isOwner = game._ownerId === userId;
+
+    const onDeleteClick = async () => {
+        await gameService.delete(game._id);
+
+        // TODO: delete from state
+
+        navigate('/catalog');
+    };
 
     return (
         <section id="game-details">
@@ -50,26 +66,28 @@ export const GameDetails = () => {
                                 <p>{x.username}: {x.comment}</p>
                             </li>
                         ))}
-
                     </ul>
-                    {/* {!game.comments?.length && (
+
+                    {/* {!Object.values(game.comments).length && (
                         <p className="no-comment">No comments.</p>
                     )} */}
                 </div>
 
                 {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
-                <div className="buttons">
-                    <a href="#" className="button">Edit</a>
-                    <a href="#" className="button">Delete</a>
-                </div>
+                {isOwner && (
+                    <div className="buttons">
+                        <Link to={`/catalog/${game._id}/edit`} className="button">Edit</Link>
+                        <button className="button" onClick={onDeleteClick}>Delete</button>
+                    </div>
+                )}
             </div>
 
             {/* <!-- Bonus --> */}
             {/* <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) --> */}
             <article className="create-comment">
                 <label>Add new comment:</label>
-                <form onSubmit={onCommentSubmit} className="form">
-                    <input type="text" name="username" placeholder="Ico" value={username} onChange={(e) => setUsername(e.target.value)} />
+                <form className="form" onSubmit={onCommentSubmit}>
+                    <input type="text" name="username" placeholder='Пешо' value={username} onChange={(e) => setUsername(e.target.value)} />
                     <textarea name="comment" placeholder="Comment......" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
                     <input className="btn submit" type="submit" value="Add Comment" />
                 </form>
@@ -77,5 +95,4 @@ export const GameDetails = () => {
 
         </section>
     );
-}
-
+};

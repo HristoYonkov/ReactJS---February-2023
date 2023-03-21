@@ -1,25 +1,48 @@
-import * as request  from "./requester";
+import { requestFactory } from './requester';
 
-const baseUrl = 'http://localhost:3030/jsonstore/games';
+const baseUrl = 'http://localhost:3030/data/games';
 
-export const getAll = async () => {
-    const result = await request.get(baseUrl);
-    const games = Object.values(result);
-    return games;
-}
+export const gameServiceFactory = (token) => {
+    const request = requestFactory(token);
 
-export const getOne = async (gameId) => {
-    const result = await request.get(`${baseUrl}/${gameId}`);
-    return result;
-}
+    const getAll = async () => {
+        const result = await request.get(baseUrl);
+        const games = Object.values(result);
+    
+        return games;
+    };
+    
+    const getOne = async (gameId) => {
+        const result = await request.get(`${baseUrl}/${gameId}`);
+    
+        return result;
+    };
+    
+    const create = async (gameData) => {
+        const result = await request.post(baseUrl, gameData);
+    
+        console.log(result);
+    
+        return result;
+    };
+    
+    const addComment = async (gameId, data) => {
+        const result = await request.post(`${baseUrl}/${gameId}/comments`, data);
+    
+        return result;
+    };
 
-export const create = async (gameData) => {
-    const result = await request.post(baseUrl, gameData);
-    return result;
-}
+    const edit = (gameId, data) => request.put(`${baseUrl}/${gameId}`, data);
 
-export const addComment = async (gameId, data) => {
-    const result = await request.post(`${baseUrl}/${gameId}/comments`, data);
+    const deleteGame = (gameId) => request.delete(`${baseUrl}/${gameId}`);
 
-    return result;
+
+    return {
+        getAll,
+        getOne,
+        create,
+        edit,
+        addComment,
+        delete: deleteGame,
+    };
 }

@@ -1,9 +1,10 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { useForm } from "../../hooks/useForm";
 
-const loginFormKeys = {
+const LoginFormKeys = {
     Email: 'email',
     Password: 'password'
 };
@@ -11,8 +12,8 @@ const loginFormKeys = {
 export const Login = () => {
     const { onLoginSubmit } = useContext(AuthContext);
     const { values, changeHandler, onSubmit } = useForm({
-        [loginFormKeys.Email]: '',
-        [loginFormKeys.Password]: '',
+        [LoginFormKeys.Email]: '',
+        [LoginFormKeys.Password]: '',
     }, onLoginSubmit);
 
     return (
@@ -26,8 +27,8 @@ export const Login = () => {
                         type="email"
                         id="email"
                         placeholder="Sokka@gmail.com"
-                        name={loginFormKeys.Email}
-                        value={values[loginFormKeys.Email]}
+                        name={LoginFormKeys.Email}
+                        value={values[LoginFormKeys.Email]}
                         onChange={changeHandler}
                     />
 
@@ -35,14 +36,13 @@ export const Login = () => {
                     <input
                         type="password"
                         id="login-password"
-                        name={loginFormKeys.Password}
-                        value={values[loginFormKeys.Password]}
+                        name={LoginFormKeys.Password}
+                        value={values[LoginFormKeys.Password]}
                         onChange={changeHandler}
                     />
-
                     <input type="submit" className="btn submit" value="Login" />
                     <p className="field">
-                        <span>If you don't have profile click <a href="#">here</a></span>
+                        <span>If you don't have profile click <Link to="/register">here</Link></span>
                     </p>
                 </div>
             </form>
