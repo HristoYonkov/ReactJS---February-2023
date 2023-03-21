@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Home = () => {
     return (
         <section id="welcome-world">
@@ -45,7 +47,7 @@ export const Home = () => {
                         <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
                     </div>
                     <div className="data-buttons">
-                        <a href="#" className="btn details-btn">Details</a>
+                        <Link to="#" className="btn details-btn">Details</Link>
                     </div>
                 </div>
 
