@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 import * as gameService from './services/gameService';
+import * as authService from './services/authServices';
 import { AuthContext } from "./contexts/AuthContext";
 
 import { Header } from "./components/Header/Header";
@@ -29,11 +30,17 @@ function App() {
     const onCreateGameSubmit = async (data) => {
         const newGame = await gameService.create(data);
         setGames(state => [...state, newGame]);
-        navigate('/catalog')
+        navigate('/catalog');
     }
 
     const onLoginSubmit = async (data) => {
-        console.log(data);
+        try {
+            const result = await authService.login(data);
+            setAuth(result);
+            navigate('/catalog')
+        } catch (error) {
+            console.log('There is a problem!');
+        }
     }
 
     return (
