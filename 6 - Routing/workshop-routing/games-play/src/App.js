@@ -8,7 +8,7 @@ import { AuthContext } from './contexts/AuthContext';
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer/Footer";
 import { Home } from "./components/Home/Home";
-import { Login } from "./components/Login/Login";
+import { Login } from "./components/login/Login";
 import { Logout } from "./components/Logout/Logout";
 import { Register } from "./components/Register/Register";
 import { CreateGame } from "./components/CreateGame/CreateGame";
