@@ -104,9 +104,14 @@ function App() {
 
                     <div>
                         <label htmlFor="uncontrolled">Uncontrolled</label>
-                        <input type="text" name='uncontrolled' id='uncontrolled' ref={ref} />
+                        <input
+                            type="text"
+                            name='uncontrolled'
+                            id='uncontrolled'
+                            ref={ref}
+                        />
                     </div>
-                    
+
                     <div>
                         <input type="submit" value="Send" />
                     </div>

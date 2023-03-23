@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { gameServiceFactory } from './services/gameService';
-import { authServiceFactory } from './services/authService';
-import { AuthContext } from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer/Footer";
@@ -19,9 +18,7 @@ import { EditGame } from './components/EditGame/EditGame';
 function App() {
     const navigate = useNavigate();
     const [games, setGames] = useState([]);
-    const [auth, setAuth] = useState({});
-    const gameService = gameServiceFactory(auth.accessToken);
-    const authService = authServiceFactory(auth.accessToken)
+    const gameService = gameServiceFactory(); //auth.accessToken
 
     useEffect(() => {
         gameService.getAll()
@@ -38,41 +35,6 @@ function App() {
         navigate('/catalog');
     };
 
-    const onLoginSubmit = async (data) => {
-        try {
-            const result = await authService.login(data);
-
-            setAuth(result);
-
-            navigate('/catalog');
-        } catch (error) {
-            console.log('There is a problem');
-        }
-    };
-
-    const onRegisterSubmit = async (values) => {
-        const { confirmPassword, ...registerData } = values;
-        if (confirmPassword !== registerData.password) {
-            return;
-        }
-
-        try {
-            const result = await authService.register(registerData);
-
-            setAuth(result);
-
-            navigate('/catalog');
-        } catch (error) {
-            console.log('There is a problem');
-        }
-    };
-
-    const onLogout = async () => {
-        await authService.logout();
-
-        setAuth({});
-    };
-
     const onGameEditSubmit = async (values) => {
         const result = await gameService.edit(values._id, values);
 
@@ -81,18 +43,8 @@ function App() {
         navigate(`/catalog/${values._id}`);
     }
 
-    const contextValues = {
-        onLoginSubmit,
-        onRegisterSubmit,
-        onLogout,
-        userId: auth._id,
-        token: auth.accessToken,
-        userEmail: auth.email,
-        isAuthenticated: !!auth.accessToken,
-    };
-
     return (
-        <AuthContext.Provider value={contextValues}>
+        <AuthProvider>
             <div id="box">
                 <Header />
 
@@ -111,7 +63,7 @@ function App() {
 
                 <Footer />
             </div>
-        </AuthContext.Provider>
+        </AuthProvider>
     );
 }
 
