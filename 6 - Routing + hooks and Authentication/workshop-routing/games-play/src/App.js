@@ -14,6 +14,7 @@ import { CreateGame } from "./components/CreateGame/CreateGame";
 import { Catalog } from "./components/Catalog/Catalog";
 import { GameDetails } from './components/GameDetails/GameDetails';
 import { EditGame } from './components/EditGame/EditGame';
+// import { withAuth } from './hoc/withAuth';
 
 function App() {
     const navigate = useNavigate();
@@ -42,6 +43,8 @@ function App() {
 
         navigate(`/catalog/${values._id}`);
     }
+
+    // const EnhancedLogin = withAuth(Login);
 
     return (
         <AuthProvider>
